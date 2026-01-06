@@ -1,0 +1,87 @@
+2026-01-06T22:22:55.471697Z  INFO tailwindcss_oxide::scanner: Provided sources:
+2026-01-06T22:22:55.494466Z  INFO tailwindcss_oxide::scanner: Source: PublicSourceEntry { base: "G:\\GitHub\\img-cropper", pattern: "**/*", negated: false }
+2026-01-06T22:22:55.593160Z  INFO tailwindcss_oxide::scanner: Optimized sources:
+2026-01-06T22:22:55.593206Z  INFO tailwindcss_oxide::scanner: Source: Auto { base: "G:\\GitHub\\img-cropper" }
+2026-01-06T22:22:55.724672Z  INFO scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-06T22:22:55.835965Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\app"
+2026-01-06T22:22:55.836197Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\app\\globals.css"
+2026-01-06T22:22:55.836519Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\app\\layout.tsx"
+2026-01-06T22:22:55.836605Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\app\\page.tsx"
+2026-01-06T22:22:55.836693Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\eslint.config.mjs"
+2026-01-06T22:22:55.836783Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\next.config.ts"
+2026-01-06T22:22:55.837005Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\package.json"
+2026-01-06T22:22:55.837069Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\postcss.config.mjs"
+2026-01-06T22:22:55.837161Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\public"
+2026-01-06T22:22:55.837319Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\public\\file.svg"
+2026-01-06T22:22:55.837404Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\public\\globe.svg"
+2026-01-06T22:22:55.837484Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\public\\next.svg"
+2026-01-06T22:22:55.837562Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\public\\vercel.svg"
+2026-01-06T22:22:55.837638Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\public\\window.svg"
+2026-01-06T22:22:55.837716Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\README.md"
+2026-01-06T22:22:55.837784Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\tsconfig.json"
+2026-01-06T22:22:55.837863Z  INFO scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-06T22:22:55.837873Z  INFO extract_candidates: tailwindcss_oxide::scanner: enter
+2026-01-06T22:22:55.837880Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: enter
+2026-01-06T22:22:55.837884Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading 13 file(s)
+2026-01-06T22:22:55.839195Z  INFO tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\next.config.ts"
+2026-01-06T22:22:55.839218Z  INFO tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\public\\vercel.svg"
+2026-01-06T22:22:55.839218Z  INFO tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\app\\page.tsx"
+2026-01-06T22:22:55.839205Z  INFO tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\app\\layout.tsx"
+2026-01-06T22:22:55.839228Z  INFO tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\package.json"
+2026-01-06T22:22:55.839283Z  INFO tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\public\\file.svg"
+2026-01-06T22:22:55.839312Z  INFO tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\postcss.config.mjs"
+2026-01-06T22:22:55.839345Z  INFO tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\eslint.config.mjs"
+2026-01-06T22:22:55.839363Z  INFO tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\public\\window.svg"
+2026-01-06T22:22:55.839362Z  INFO tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\tsconfig.json"
+2026-01-06T22:22:55.854783Z  INFO tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\public\\globe.svg"
+2026-01-06T22:22:55.857693Z  INFO tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\README.md"
+2026-01-06T22:22:55.869106Z  INFO tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\public\\next.svg"
+2026-01-06T22:22:55.869258Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: exit
+2026-01-06T22:22:55.869282Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: enter
+2026-01-06T22:22:55.869290Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: enter
+2026-01-06T22:22:55.870158Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: exit
+2026-01-06T22:22:55.870196Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: exit
+2026-01-06T22:22:55.870202Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: enter
+2026-01-06T22:22:55.870205Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading 1 file(s)
+2026-01-06T22:22:55.870334Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\app\\globals.css"
+2026-01-06T22:22:55.870343Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: exit
+2026-01-06T22:22:55.870350Z  INFO extract_candidates:extract_css_variables: tailwindcss_oxide::scanner: enter
+2026-01-06T22:22:55.870354Z  INFO extract_candidates:extract_css_variables:extract: tailwindcss_oxide::scanner: enter
+2026-01-06T22:22:55.870502Z  INFO extract_candidates:extract_css_variables:extract: tailwindcss_oxide::scanner: exit
+2026-01-06T22:22:55.870515Z  INFO extract_candidates:extract_css_variables: tailwindcss_oxide::scanner: exit
+2026-01-06T22:22:55.870934Z  INFO extract_candidates: tailwindcss_oxide::scanner: exit
+2026-01-06T22:22:55.871229Z  INFO get_files: tailwindcss_oxide::scanner: enter
+2026-01-06T22:22:55.871240Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-06T22:22:55.872365Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\app"
+2026-01-06T22:22:55.872942Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\public"
+2026-01-06T22:22:55.873293Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-06T22:22:55.873381Z  INFO get_files: tailwindcss_oxide::scanner: exit
+2026-01-06T22:22:55.873483Z  INFO get_globs: tailwindcss_oxide::scanner: enter
+2026-01-06T22:22:55.873491Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-06T22:22:55.874677Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\app"
+2026-01-06T22:22:55.875203Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\public"
+2026-01-06T22:22:55.875538Z  INFO get_globs:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-06T22:22:55.877538Z  INFO get_globs: tailwindcss_oxide::scanner: exit
+2026-01-06T22:23:43.905006Z  INFO scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-06T22:23:43.906203Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\app"
+2026-01-06T22:23:43.906404Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\app\\page.tsx"
+2026-01-06T22:23:43.906792Z  INFO scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\public"
+2026-01-06T22:23:43.907162Z  INFO scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-06T22:23:43.907171Z  INFO extract_candidates: tailwindcss_oxide::scanner: enter
+2026-01-06T22:23:43.907176Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: enter
+2026-01-06T22:23:43.907179Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading 1 file(s)
+2026-01-06T22:23:43.907243Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: Reading "G:\\GitHub\\img-cropper\\app\\page.tsx"
+2026-01-06T22:23:43.907253Z  INFO extract_candidates:read_all_files: tailwindcss_oxide::scanner: exit
+2026-01-06T22:23:43.907297Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: enter
+2026-01-06T22:23:43.907304Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: enter
+2026-01-06T22:23:43.907566Z  INFO extract_candidates:parse_all_blobs:extract: tailwindcss_oxide::scanner: exit
+2026-01-06T22:23:43.907596Z  INFO extract_candidates:parse_all_blobs: tailwindcss_oxide::scanner: exit
+2026-01-06T22:23:43.907841Z  INFO extract_candidates: tailwindcss_oxide::scanner: exit
+2026-01-06T22:23:43.907998Z  INFO get_files: tailwindcss_oxide::scanner: enter
+2026-01-06T22:23:43.908006Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: enter
+2026-01-06T22:23:43.909141Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\app"
+2026-01-06T22:23:43.909673Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: Discovering "G:\\GitHub\\img-cropper\\public"
+2026-01-06T22:23:43.910010Z  INFO get_files:scan_sources: tailwindcss_oxide::scanner: exit
+2026-01-06T22:23:43.910085Z  INFO get_files: tailwindcss_oxide::scanner: exit
+2026-01-06T22:23:43.910154Z  INFO get_globs: tailwindcss_oxide::scanner: enter
+2026-01-06T22:23:43.910161Z  INFO get_globs: tailwindcss_oxide::scanner: exit
