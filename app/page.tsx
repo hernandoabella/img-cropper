@@ -1,116 +1,192 @@
 "use client";
 
-import Image from "next/image";
-import { FaWhatsapp, FaPhoneAlt, FaClock, FaInstagram, FaFacebook, FaLinkedin } from "react-icons/fa";
+import { useState, useCallback } from "react";
+import Cropper, { Point, Area } from "react-easy-crop";
+import { FaCloudUploadAlt, FaDownload, FaTrash, FaMagic, FaExpand, FaInstagram, FaYoutube, FaSquare } from "react-icons/fa";
 
-export default function FooterContact() {
-  const phoneNumber = "+573135365766";
-  const whatsappUrl = `https://wa.me/573135365766`;
+// Ratio presets for the new UI
+const RATIOS = [
+  { label: "Free", value: undefined, icon: <FaExpand /> },
+  { label: "1:1", value: 1, icon: <FaSquare /> },
+  { label: "4:5", value: 4 / 5, icon: <FaInstagram /> },
+  { label: "16:9", value: 16 / 9, icon: <FaYoutube /> },
+];
+
+export default function PerfectImageCropper() {
+  const [image, setImage] = useState<string | null>(null);
+  const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [aspect, setAspect] = useState<number | undefined>(undefined);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
+
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => setImage(reader.result as string));
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const onCropComplete = useCallback((_croppedArea: Area, croppedAreaPixels: Area) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
+
+  const downloadPerfectCrop = async () => {
+    if (!croppedAreaPixels || !image) return;
+    try {
+      const img = new Image();
+      img.src = image;
+      await new Promise((resolve) => (img.onload = resolve));
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+      if (!ctx) return;
+      canvas.width = croppedAreaPixels.width;
+      canvas.height = croppedAreaPixels.height;
+      ctx.drawImage(img, croppedAreaPixels.x, croppedAreaPixels.y, croppedAreaPixels.width, croppedAreaPixels.height, 0, 0, croppedAreaPixels.width, croppedAreaPixels.height);
+      
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      let minX = canvas.width, minY = canvas.height, maxX = 0, maxY = 0;
+      let foundContent = false;
+      for (let y = 0; y < canvas.height; y++) {
+        for (let x = 0; x < canvas.width; x++) {
+          const alpha = data[(y * canvas.width + x) * 4 + 3];
+          if (alpha > 0) {
+            if (x < minX) minX = x; if (x > maxX) maxX = x;
+            if (y < minY) minY = y; if (y > maxY) maxY = y;
+            foundContent = true;
+          }
+        }
+      }
+      
+      const finalCanvas = document.createElement("canvas");
+      // Logic: If Freeform, trim. If fixed ratio, we usually keep the ratio frame.
+      const fWidth = aspect ? canvas.width : (maxX - minX + 1);
+      const fHeight = aspect ? canvas.height : (maxY - minY + 1);
+      
+      finalCanvas.width = fWidth;
+      finalCanvas.height = fHeight;
+      const finalCtx = finalCanvas.getContext("2d");
+      if (!finalCtx) return;
+      
+      if (aspect) {
+        finalCtx.drawImage(canvas, 0, 0);
+      } else {
+        finalCtx.drawImage(canvas, minX, minY, fWidth, fHeight, 0, 0, fWidth, fHeight);
+      }
+
+      const link = document.createElement("a");
+      link.download = `multidim-crop-${Date.now()}.png`;
+      link.href = finalCanvas.toDataURL("image/png");
+      link.click();
+    } catch (e) { console.error(e); }
+  };
 
   return (
-    <footer id="contacto" className="bg-slate-950 text-white pt-24 pb-12 relative overflow-hidden">
-      {/* Decoración de fondo */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"></div>
-      
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid gap-16 lg:grid-cols-2 items-start mb-20">
-          
-          {/* LADO IZQUIERDO: TEXTO Y CONTACTO */}
-          <div>
-            <div className="inline-block px-3 py-1 bg-[#FFC107] text-slate-900 rounded-lg text-[10px] font-black uppercase tracking-widest mb-6">
-              Contacto Directo
-            </div>
-            <h2 className="text-5xl md:text-6xl font-black mb-8 tracking-tighter uppercase leading-none">
-              ¿LISTO PARA <br />
-              <span className="text-cyan-500">POTENCIAR TU TECH?</span>
-            </h2>
-            
-            <p className="text-slate-400 text-lg max-w-md mb-10 font-medium">
-              Escríbeme o llámame. Estoy listo para diseñar la solución que tu hogar o empresa necesita en el Magdalena.
-            </p>
-
-            <div className="grid gap-6 sm:grid-cols-2">
-              {/* Celular */}
-              <a 
-                href={`tel:${phoneNumber}`}
-                className="flex items-center gap-4 p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 transition-all group"
-              >
-                <div className="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center text-cyan-500 group-hover:bg-cyan-500 group-hover:text-white transition-all">
-                  <FaPhoneAlt size={18} />
-                </div>
-                <div>
-                  <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Llámanos</p>
-                  <p className="font-bold text-white tracking-tight">{phoneNumber}</p>
-                </div>
-              </a>
-
-              {/* Horario */}
-              <div className="flex items-center gap-4 p-4 rounded-2xl bg-slate-900 border border-slate-800">
-                <div className="w-12 h-12 bg-[#FFC107]/10 rounded-xl flex items-center justify-center text-[#FFC107]">
-                  <FaClock size={18} />
-                </div>
-                <div>
-                  <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Atención</p>
-                  <p className="font-bold text-white tracking-tight">Lun - Sáb / 8AM - 6PM</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* LADO DERECHO: TARJETA DE ACCIÓN (WA) */}
-          <div className="relative">
-            <div className="absolute inset-0 bg-cyan-500/20 blur-[100px] rounded-full"></div>
-            <div className="relative p-10 rounded-[3rem] bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden">
-              <h3 className="text-2xl font-black mb-4 uppercase tracking-tight">Presupuesto sin costo</h3>
-              <p className="text-slate-400 mb-8 font-medium">
-                Cuéntame tu proyecto por WhatsApp y recibe una asesoría técnica preliminar hoy mismo.
-              </p>
-              
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-3 w-full py-5 rounded-2xl bg-[#25D366] hover:bg-[#1ebd5b] text-white font-black uppercase tracking-widest text-sm transition-all shadow-[0_10px_30px_rgba(37,211,102,0.2)] active:scale-95"
-              >
-                <FaWhatsapp size={24} />
-                Iniciar Chat Ahora
-              </a>
-
-              <div className="mt-8 pt-8 border-t border-slate-800 flex justify-center gap-6 text-slate-500">
-                <a href="#" className="hover:text-cyan-500 transition-colors"><FaInstagram size={20} /></a>
-                <a href="#" className="hover:text-cyan-500 transition-colors"><FaFacebook size={20} /></a>
-                <a href="#" className="hover:text-cyan-500 transition-colors"><FaLinkedin size={20} /></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* FOOTER BOTTOM: LOGO Y LEGAL */}
-        <div className="pt-12 border-t border-slate-900 flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="flex items-center gap-4">
-            <Image 
-              src="/logo.png" 
-              alt="Luis Oribe Logo" 
-              width={50} 
-              height={50} 
-              className="brightness-0 invert opacity-80"
-            />
-            <div>
-              <p className="text-lg font-black tracking-tighter leading-none">LUIS ORIBE</p>
-              <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.3em]">Ingeniería & Tech</p>
-            </div>
-          </div>
-
-          <div className="text-center md:text-right">
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">
-              © {new Date().getFullYear()} Tecno Domi SM • Santa Marta, Colombia
-            </p>
-            <p className="text-[10px] text-slate-600 mt-1 uppercase font-medium">
-              Seguridad Electrónica • Redes • Domótica • Energía Solar
-            </p>
-          </div>
-        </div>
+    <section className="bg-[#030303] min-h-screen py-12 text-zinc-100 font-sans selection:bg-indigo-500/30">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-indigo-600/10 blur-[120px] rounded-full" />
+        <div className="absolute top-[20%] -right-[5%] w-[30%] h-[30%] bg-fuchsia-600/10 blur-[120px] rounded-full" />
       </div>
-    </footer>
+
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <header className="flex flex-col md:flex-row items-center justify-between mb-10 gap-6">
+          <div>
+            <h2 className="text-5xl font-extrabold tracking-tight bg-gradient-to-r from-white via-zinc-400 to-zinc-600 bg-clip-text text-transparent">
+              Multi<span className="text-indigo-500">Dim</span> Crop.
+            </h2>
+            <p className="text-zinc-500 text-sm font-medium mt-1">Advanced Aspect-Ratio & Alpha Control</p>
+          </div>
+          {image && (
+            <button onClick={() => setImage(null)} className="group flex items-center gap-2 px-4 py-2 bg-zinc-900/50 hover:bg-rose-500/10 border border-zinc-800 hover:border-rose-500/50 rounded-full text-zinc-400 hover:text-rose-400 text-xs font-bold transition-all">
+              <FaTrash /> Reset Canvas
+            </button>
+          )}
+        </header>
+
+        {!image ? (
+          <div className="relative h-[450px] bg-zinc-900/20 border-2 border-dashed border-zinc-800 rounded-[3rem] flex flex-col items-center justify-center group hover:border-indigo-500/40 transition-all cursor-pointer overflow-hidden backdrop-blur-sm">
+            <input type="file" accept="image/*" onChange={onFileChange} className="absolute inset-0 opacity-0 cursor-pointer z-20" />
+            <div className="w-20 h-20 bg-indigo-500/10 rounded-3xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+              <FaCloudUploadAlt size={32} className="text-indigo-400" />
+            </div>
+            <p className="text-xl font-semibold text-zinc-300">Upload Source Image</p>
+          </div>
+        ) : (
+          <div className="grid lg:grid-cols-12 gap-8">
+            <div className="lg:col-span-8 space-y-6">
+              <div className="relative h-[550px] w-full rounded-[2.5rem] overflow-hidden border border-zinc-800 shadow-2xl bg-black/40 backdrop-blur-md checkerboard-bg">
+                <Cropper
+                  image={image} crop={crop} zoom={zoom} aspect={aspect}
+                  onCropChange={setCrop} onCropComplete={onCropComplete} onZoomChange={setZoom}
+                />
+              </div>
+              
+              <div className="flex items-center gap-6 p-5 bg-zinc-900/40 backdrop-blur-md rounded-[2rem] border border-zinc-800/50">
+                <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest ml-2">Zoom</span>
+                <input type="range" value={zoom} min={1} max={3} step={0.01} onChange={(e) => setZoom(Number(e.target.value))} className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-indigo-500" />
+                <span className="text-xs font-mono font-bold text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full">{Math.round(zoom * 100)}%</span>
+              </div>
+            </div>
+
+            <aside className="lg:col-span-4 space-y-6">
+              <div className="bg-zinc-900/40 backdrop-blur-xl p-6 rounded-[2.5rem] border border-zinc-800/50 shadow-xl">
+                <h4 className="text-[10px] font-bold uppercase text-zinc-500 tracking-[0.3em] mb-4 flex items-center gap-2">
+                  <FaMagic className="text-indigo-500" /> Dimensions
+                </h4>
+                
+                {/* Aspect Ratio Selector */}
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  {RATIOS.map((r) => (
+                    <button
+                      key={r.label}
+                      onClick={() => setAspect(r.value)}
+                      className={`flex items-center justify-center gap-2 p-3 rounded-xl border text-xs font-bold transition-all ${
+                        aspect === r.value 
+                        ? "bg-indigo-600 border-indigo-400 text-white shadow-lg shadow-indigo-900/40" 
+                        : "bg-black/20 border-zinc-800 text-zinc-500 hover:border-zinc-600"
+                      }`}
+                    >
+                      {r.icon} {r.label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="space-y-3 mb-8">
+                  <div className="flex justify-between items-center p-3 bg-black/20 rounded-xl border border-zinc-800/50">
+                    <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-tighter">Export Format</span>
+                    <span className="text-[10px] font-bold text-white uppercase">PNG Alpha</span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={downloadPerfectCrop}
+                  className="group w-full py-5 bg-gradient-to-br from-indigo-600 to-violet-700 hover:from-indigo-500 hover:to-violet-600 text-white font-bold rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-[0.98]"
+                >
+                  <FaDownload /> <span className="uppercase tracking-widest text-xs">Download Result</span>
+                </button>
+              </div>
+
+              <div className="p-5 bg-emerald-500/5 rounded-[2rem] border border-emerald-500/10">
+                <p className="text-[9px] text-zinc-500 font-medium leading-relaxed uppercase text-center">
+                  Smart aspect-ratio anchoring is active. Final export will be high-resolution.
+                </p>
+              </div>
+            </aside>
+          </div>
+        )}
+      </div>
+
+      <style jsx>{`
+        .checkerboard-bg {
+          background-image: linear-gradient(45deg, #0a0a0a 25%, transparent 25%), 
+                            linear-gradient(-45deg, #0a0a0a 25%, transparent 25%), 
+                            linear-gradient(45deg, transparent 75%, #0a0a0a 75%), 
+                            linear-gradient(-45deg, transparent 75%, #0a0a0a 75%);
+          background-size: 24px 24px;
+          background-position: 0 0, 0 12px, 12px -12px, -12px 0px;
+        }
+      `}</style>
+    </section>
   );
 }
